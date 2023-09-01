@@ -49,5 +49,5 @@ jobs:
         with:
           app-name: 'helpte'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_1B00A573059A48579B1BEF9F33BECFE7 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B9C3A90E09044690A836F783761573EA }}
           package: '*.jar'
