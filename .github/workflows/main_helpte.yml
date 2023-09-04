@@ -52,9 +52,9 @@ jobs:
       - name: OIDC Login to Azure Public Cloud with AzPowershell (enableAzPSSession true)
         uses: azure/login@v1
         with:
-          client-id: 80615538-843e-4249-a4fb-799b1215e5dd
-          tenant-id: 11dbbfe2-89b8-4549-be10-cec364e59551
-          subscription-id: helpte
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
           enable-AzPSSession: true
 
       - name: Deploy to Azure Web App
