@@ -36,6 +36,15 @@ jobs:
           name: java-app
           path: '${{ github.workspace }}/gradle/wrapper/*.jar' # Update the path to the Gradle JAR file
 
+    
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'api-vaga-pf0110'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C2258FCFB6F4567A2870F4664D39589 }}
+          package: '*.jar'
   deploy:
     runs-on: windows-latest
     needs: build
@@ -49,19 +58,11 @@ jobs:
         with:
           name: java-app
 
-      - name: OIDC Login to Azure Public Cloud with AzPowershell (enableAzPSSession true)
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-          enable-AzPSSession: true
-
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: 'helpte'
           slot-name: 'production'
-          publish-profile: ${{ secrets.AzureAppService_PublishProfile_1234 }}
+          publish-profile: ${{ secrets.AzureAppService_PublishProfile_NGulPRMh4l5iJh2o2Y1vhKNtCbpg6Q2wdxgduDn04tNwzW54XN6CGFx1Askd }}
           package: '*.jar'
