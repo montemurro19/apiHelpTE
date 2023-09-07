@@ -21,15 +21,21 @@ jobs:
         with:
           java-version: '17'
 
+      - name: Set up Gradle
+        uses: actions/setup-java@v1
+        with:
+          distribution: 'gradle'
+          java-version: '17' # You can specify the desired Java version for Gradle
+
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.jar'
-
+          path: '${{ github.workspace }}/build/libs/*.jar' # Update the path to the Gradle JAR file
+          
   deploy:
     runs-on: windows-latest
     needs: build
