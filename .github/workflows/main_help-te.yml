@@ -36,7 +36,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: '${{ github.workspace }}/build/libs/*.jar' # Update the path to the Gradle JAR file
+          path: '${{ github.workspace }}/gradle/wrapper/*.jar' # Update the path to the Gradle JAR file
           
   deploy:
     runs-on: windows-latest
