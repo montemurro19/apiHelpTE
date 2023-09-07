@@ -28,8 +28,10 @@ jobs:
           java-version: '17' # You can specify the desired Java version for Gradle
 
       - name: Build with Gradle
-        run: ./gradlew build
-
+        run: |
+          ./gradlew build
+          ls -R ${GITHUB_WORKSPACE} # List files in the workspace for debugging
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
