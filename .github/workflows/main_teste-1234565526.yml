@@ -41,7 +41,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'api-vaga-pf0110'
+          app-name: 'teste-1234565526'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C2258FCFB6F4567A2870F4664D39589 }}
           package: '*.jar'
@@ -62,7 +62,7 @@ jobs:
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'helpte'
-          slot-name: 'production'
+          app-name: 'teste-1234565526'
+          slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_5C2258FCFB6F4567A2870F4664D39589 }}
           package: '*.jar'
