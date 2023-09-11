@@ -11,7 +11,7 @@ repositories {
 }
 
 application {
-    mainClassName = 'br.com.helpte.controller.Application'
+    mainClassName = 'br.com.helpte.Application'
 }
 
 dependencies {
