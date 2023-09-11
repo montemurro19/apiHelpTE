@@ -13,8 +13,7 @@ public abstract class GenericDaoImpl<E,K> implements GenericDao<E, K>{
 	protected EntityManager em;
 	
 	private Class<E> clazz;
-	
-	
+		
 	@SuppressWarnings("unchecked")
 	public GenericDaoImpl(EntityManager em) {
 		this.em = em;

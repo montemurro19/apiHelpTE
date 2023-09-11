@@ -19,4 +19,10 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario, Integer> implements 
 				em.createQuery("FROM Usuario", Usuario.class);
 		return query.getResultList();
 	}
+
+	public Usuario login(String usuario) {
+		return em.createQuery("from Usuario u where u.usuario = :usuario", Usuario.class)
+			.setParameter("usuario", usuario)
+			.getSingleResult();
+	}
 }

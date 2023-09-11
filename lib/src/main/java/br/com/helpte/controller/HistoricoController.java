@@ -6,21 +6,18 @@ import java.util.List;
 import jakarta.persistence.EntityManager;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import br.com.helpte.dao.HistoricoDao;
+import br.com.helpte.dao.UsuarioDao;
+import br.com.helpte.dao.impl.UsuarioDaoImpl;
 import br.com.helpte.dao.impl.HistoricoDaoImpl;
 import br.com.helpte.entity.Historico;
 import br.com.helpte.exception.CommitException;
 import br.com.helpte.sigleton.EntityManagerFactorySingleton;
 import br.com.helpte.exception.EntidadeNaoEcontradaException;
 
+@CrossOrigin(origins = "http://localhost:19006")
 @RestController
 public class HistoricoController {
 
@@ -30,38 +27,26 @@ public class HistoricoController {
 	HistoricoDao dao = new HistoricoDaoImpl(em);
 	
 	private HistoricoDao historicoDao = new HistoricoDaoImpl(em);	
+	private UsuarioDao usuarioDao = new UsuarioDaoImpl(em);
 
-	@GetMapping("/historico")
-	ResponseEntity<List<Historico>> all() {
+	@GetMapping("/historico/{id}")
+	ResponseEntity<List<Historico>> all(@PathVariable Integer id) {
 		List<Historico> historicoList = historicoDao.listar();
 		return ResponseEntity.ok(historicoList);
 	}
 
-	@PostMapping("/historico")
-	public ResponseEntity<Historico> newHistorico(@RequestBody Historico newHistorico) {
+	@PostMapping("/historico/{id}")
+	public ResponseEntity<Historico> newHistorico(@RequestBody Historico newHistorico, @PathVariable Integer id) {
 		try {
+			newHistorico.setUsuario(usuarioDao.buscar(id));
 			dao.salvar(newHistorico);
 			dao.commit();
 		} catch (CommitException e) {
 			System.out.println(e.getMessage());
+		} catch (EntidadeNaoEcontradaException e) {
+			System.out.println(e.getMessage());
 		}
 		return ResponseEntity.ok(newHistorico);
-	}
-
-	@GetMapping("/historico/{id}")
-	public ResponseEntity<Historico> one(@PathVariable Integer id) {
-		
-		Historico historico = null;
-		try {
-			historico = dao.buscar(id);
-		} catch (EntidadeNaoEcontradaException e) {
-			
-			e.printStackTrace();
-		}
-		if (historico == null) {
-			ResponseEntity.notFound();
-		}
-		return ResponseEntity.ok(historico);
 	}
 
 	@PutMapping("/historico/{id}")

@@ -14,9 +14,10 @@ public class HistoricoDaoImpl extends GenericDaoImpl<Historico, Integer> impleme
 		super(em);
 	}
 
-	public List<Historico> listar() {
+	public List<Historico> listar(Integer id) {
 		TypedQuery<Historico> query = 
-				em.createQuery("from Historico", Historico.class);
+				em.createQuery("from Historico h where h.codigo = :codigo", Historico.class)
+				.setParameter("codigo", id);
 		return query.getResultList();
 	}
 	

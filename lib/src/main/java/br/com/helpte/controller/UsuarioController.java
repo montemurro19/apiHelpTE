@@ -6,14 +6,9 @@ import java.util.List;
 import jakarta.persistence.EntityManager;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import br.com.helpte.model.Credencial;
 import br.com.helpte.dao.UsuarioDao;
 import br.com.helpte.dao.impl.UsuarioDaoImpl;
 import br.com.helpte.entity.Usuario;
@@ -21,6 +16,7 @@ import br.com.helpte.exception.CommitException;
 import br.com.helpte.sigleton.EntityManagerFactorySingleton;
 import br.com.helpte.exception.EntidadeNaoEcontradaException;
 
+@CrossOrigin(origins = "http://localhost:19006")
 @RestController
 public class UsuarioController {
 
@@ -29,12 +25,18 @@ public class UsuarioController {
 	
 	UsuarioDao dao = new UsuarioDaoImpl(em);
 	
-	private UsuarioDao usuarioDao = new UsuarioDaoImpl(em);	
+	private UsuarioDao usuarioDao = new UsuarioDaoImpl(em);
 
 	@GetMapping("/usuario")
 	ResponseEntity<List<Usuario>> all() {
 		List<Usuario> usuarioList = usuarioDao.listar();
 		return ResponseEntity.ok(usuarioList);
+	}
+
+	@PostMapping("/login")
+	ResponseEntity<Usuario> login(@RequestBody Credencial usuario) {
+		Usuario login = usuarioDao.login(usuario.usuario());
+		return ResponseEntity.ok(login);
 	}
 
 	@PostMapping("/usuario")
@@ -49,8 +51,7 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/usuario/{id}")
-	public ResponseEntity<Usuario> one(@PathVariable Integer id) {
-		
+	public ResponseEntity<Usuario> one(@PathVariable Integer id) {		
 		Usuario usuario = null;
 		try {
 			usuario = dao.buscar(id);

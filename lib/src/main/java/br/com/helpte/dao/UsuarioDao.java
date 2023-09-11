@@ -6,4 +6,6 @@ import br.com.helpte.entity.Usuario;
 
 public interface UsuarioDao extends GenericDao<Usuario, Integer> {
 	List<Usuario> listar();
+
+	Usuario login(String usuario);
 }
