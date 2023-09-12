@@ -1,6 +1,5 @@
 package br.com.helpte.controller;
 
-
 import java.util.List;
 
 import jakarta.persistence.EntityManager;
@@ -22,9 +21,9 @@ public class UsuarioController {
 
 	private EntityManager em = EntityManagerFactorySingleton
 			.getInstance().createEntityManager();
-	
+
 	UsuarioDao dao = new UsuarioDaoImpl(em);
-	
+
 	private UsuarioDao usuarioDao = new UsuarioDaoImpl(em);
 
 	@GetMapping("/usuario")
@@ -51,12 +50,12 @@ public class UsuarioController {
 	}
 
 	@GetMapping("/usuario/{id}")
-	public ResponseEntity<Usuario> one(@PathVariable Integer id) {		
+	public ResponseEntity<Usuario> one(@PathVariable Integer id) {
 		Usuario usuario = null;
 		try {
 			usuario = dao.buscar(id);
 		} catch (EntidadeNaoEcontradaException e) {
-			
+
 			e.printStackTrace();
 		}
 		if (usuario == null) {
@@ -67,13 +66,18 @@ public class UsuarioController {
 
 	@PutMapping("/usuario/{id}")
 	public ResponseEntity<Usuario> replaceUsuario(@RequestBody Usuario newUsuario, @PathVariable Integer id) {
-		
 		try {
-			dao.salvar(newUsuario);
+			dao.modificar(newUsuario, id);
+		} catch (EntidadeNaoEcontradaException e) {
+			System.err.println(e.getMessage());
+		}
+
+		try {
 			dao.commit();
 		} catch (CommitException e) {
 			System.err.println(e.getMessage());
 		}
+
 		return ResponseEntity.ok(newUsuario);
 	}
 
