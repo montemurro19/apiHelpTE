@@ -41,6 +41,7 @@ public class HistoricoController {
 			newHistorico.setUsuario(usuarioDao.buscar(id));
 			dao.salvar(newHistorico);
 			dao.commit();
+			newHistorico.setCodigo(historicoDao.findHistorico(newHistorico.getFrase(), newHistorico.getTraducao()).getCodigo());
 		} catch (CommitException e) {
 			System.out.println(e.getMessage());
 		} catch (EntidadeNaoEcontradaException e) {
@@ -53,10 +54,13 @@ public class HistoricoController {
 	public ResponseEntity<Historico> replaceHistorico(@RequestBody Historico newHistorico, @PathVariable Integer id) {
 		
 		try {
+			newHistorico.setUsuario(usuarioDao.buscar(id));
 			dao.salvar(newHistorico);
 			dao.commit();
 		} catch (CommitException e) {
 			System.err.println(e.getMessage());
+		} catch (EntidadeNaoEcontradaException e) {
+			System.out.println(e.getMessage());
 		}
 		return ResponseEntity.ok(newHistorico);
 	}

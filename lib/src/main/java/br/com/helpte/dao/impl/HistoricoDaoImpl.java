@@ -20,4 +20,11 @@ public class HistoricoDaoImpl extends GenericDaoImpl<Historico, Integer> impleme
 		return query.getResultList();
 	}
 
+	public Historico findHistorico(String frase, String traducao) {
+		TypedQuery<Historico> query = em.createQuery("from Historico h where h.frase = :frase and h.traducao = :traducao ", Historico.class)
+				.setParameter("frase", frase)
+				.setParameter("traducao", traducao);
+		return query.getSingleResult();
+	}
+
 }
